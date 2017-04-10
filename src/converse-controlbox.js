@@ -43,6 +43,8 @@
     "use strict";
 
     var USERS_PANEL_ID = 'users';
+    var ROOMS_PANEL_ID = 'chatrooms'
+
     // Strophe methods for building stanzas
     var Strophe = converse.env.Strophe,
         utils = converse.env.utils;
@@ -190,6 +192,7 @@
                 __ = _converse.__;
 
             this.updateSettings({
+                show_contacts_tab: true,
                 allow_logout: true,
                 default_domain: undefined,
                 show_controlbox_by_default: false,
@@ -264,7 +267,8 @@
                 insertRoster: function () {
                     /* Place the rosterview inside the "Contacts" panel.
                      */
-                    this.contactspanel.$el.append(_converse.rosterview.$el);
+                    if( converse.show_contacts_tab )
+                        this.contactspanel.$el.append(_converse.rosterview.$el);
                     return this;
                 },
 
@@ -278,13 +282,22 @@
                 },
 
                 renderContactsPanel: function () {
-                    if (_.isUndefined(this.model.get('active-panel'))) {
+                    if( !converse.show_contacts_tab )
+                    {
+                        this.model.save({'active-panel': ROOMS_PANEL_ID});
+                    }
+                    else if (_.isUndefined(this.model.get('active-panel'))) {
                         this.model.save({'active-panel': USERS_PANEL_ID});
                     }
-                    this.contactspanel = new _converse.ContactsPanel({
-                        '$parent': this.$el.find('.controlbox-panes')
-                    });
-                    this.contactspanel.render();
+
+                    if( converse.show_contacts_tab )
+                    {
+                        this.contactspanel = new _converse.ContactsPanel({
+                            '$parent': this.$el.find('.controlbox-panes')
+                        });
+                        this.contactspanel.render();
+                    }
+
                     _converse.xmppstatusview = new _converse.XMPPStatusView({
                         'model': _converse.xmppstatus
                     });

@@ -2337,6 +2337,19 @@
                         $available_chatrooms = this.$el.find('#available-chatrooms');
                     this.rooms = $(iq).find('query').find('item');
                     if (this.rooms.length) {
+                        var compareFunc = function (a, b) {
+                            var nameA = Strophe.unescapeNode($(a).attr('name')||$(a).attr('jid')).toUpperCase();
+                            var nameB = Strophe.unescapeNode($(b).attr('name')||$(b).attr('jid')).toUpperCase();
+                              if (nameA<nameB) {
+                                return -1;
+                              }
+                              if (nameA>nameB) {
+                                return 1;
+                              }
+                              // a must be equal to b
+                              return 0;
+                        };
+                        this.rooms.sort( compareFunc );
                         // For translators: %1$s is a variable and will be
                         // replaced with the XMPP server name
                         $available_chatrooms.html('<dt>'+__('Rooms on %1$s',this.model.get('muc_domain'))+'</dt>');
