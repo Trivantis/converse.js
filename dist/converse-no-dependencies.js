@@ -5616,6 +5616,7 @@ return __p
             message_storage: 'session',
             password: undefined,
             prebind_url: null,
+            prebind_headers: null,
             priority: 0,
             registration_domain: '',
             rid: undefined,
@@ -7210,6 +7211,7 @@ return __p
             var that = this;
             $.ajax({
                 url:  this.prebind_url,
+                headers: this.prebind_headers,
                 type: 'GET',
                 dataType: "json",
                 success: function (response) {
