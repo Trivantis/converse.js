@@ -91,7 +91,7 @@
         }
         .box-flyout {
             background-color: white;
-            box-shadow: 1px 3px 5px 3px rgba(0, 0, 0, 0.4);
+            border:1px solid #303030;
             height: $chat-height;
             min-height: $chat-height/2;
             min-width: $chat-width;
@@ -118,6 +118,9 @@
                 color: $chat-head-text-color;
                 width: 100%;
             }
+        }
+        .chatroom-topic {
+            color: $chat-head-topic-color;
         }
         .chat-body {
             background-color: white;
@@ -184,6 +187,7 @@
                     &.chat-msg-content {
                         max-width: 100%;
                         word-wrap: break-word;
+                        font-family:"Raleway";
                     }
                 }
             }

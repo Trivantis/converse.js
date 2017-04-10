@@ -7,7 +7,7 @@
     height: calc(100% - #{$controlbox-dropdown-height*2} - 20px);
     overflow: hidden;
     padding: 0;
-    padding-bottom: 3em;
+    padding-bottom: 100px;
 
     &.no-contact-requests {
         height: calc(100% - #{$controlbox-dropdown-height} - 20px);
