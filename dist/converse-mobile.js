@@ -51543,6 +51543,8 @@ return __p
     "use strict";
 
     var USERS_PANEL_ID = 'users';
+    var ROOMS_PANEL_ID = 'chatrooms'
+
     // Strophe methods for building stanzas
     var Strophe = converse.env.Strophe,
         utils = converse.env.utils;
@@ -51690,6 +51692,7 @@ return __p
                 __ = _converse.__;
 
             this.updateSettings({
+                show_contacts_tab: true,
                 allow_logout: true,
                 default_domain: undefined,
                 show_controlbox_by_default: false,
@@ -51764,7 +51767,8 @@ return __p
                 insertRoster: function () {
                     /* Place the rosterview inside the "Contacts" panel.
                      */
-                    this.contactspanel.$el.append(_converse.rosterview.$el);
+                    if( converse.show_contacts_tab )
+                        this.contactspanel.$el.append(_converse.rosterview.$el);
                     return this;
                 },
 
@@ -51778,13 +51782,22 @@ return __p
                 },
 
                 renderContactsPanel: function () {
-                    if (_.isUndefined(this.model.get('active-panel'))) {
+                    if( !converse.show_contacts_tab )
+                    {
+                        this.model.save({'active-panel': ROOMS_PANEL_ID});
+                    }
+                    else if (_.isUndefined(this.model.get('active-panel'))) {
                         this.model.save({'active-panel': USERS_PANEL_ID});
                     }
-                    this.contactspanel = new _converse.ContactsPanel({
-                        '$parent': this.$el.find('.controlbox-panes')
-                    });
-                    this.contactspanel.render();
+
+                    if( converse.show_contacts_tab )
+                    {
+                        this.contactspanel = new _converse.ContactsPanel({
+                            '$parent': this.$el.find('.controlbox-panes')
+                        });
+                        this.contactspanel.render();
+                    }
+
                     _converse.xmppstatusview = new _converse.XMPPStatusView({
                         'model': _converse.xmppstatus
                     });
@@ -55615,6 +55628,19 @@ define("awesomplete", (function (global) {
                         $available_chatrooms = this.$el.find('#available-chatrooms');
                     this.rooms = $(iq).find('query').find('item');
                     if (this.rooms.length) {
+                        var compareFunc = function (a, b) {
+                            var nameA = Strophe.unescapeNode($(a).attr('name')||$(a).attr('jid')).toUpperCase();
+                            var nameB = Strophe.unescapeNode($(b).attr('name')||$(b).attr('jid')).toUpperCase();
+                              if (nameA<nameB) {
+                                return -1;
+                              }
+                              if (nameA>nameB) {
+                                return 1;
+                              }
+                              // a must be equal to b
+                              return 0;
+                        };
+                        this.rooms.sort( compareFunc );
                         // For translators: %1$s is a variable and will be
                         // replaced with the XMPP server name
                         $available_chatrooms.html('<dt>'+__('Rooms on %1$s',this.model.get('muc_domain'))+'</dt>');
