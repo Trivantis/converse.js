@@ -86,7 +86,7 @@
                 'xa': __('This contact is away for an extended period'),
                 'away': __('This contact is away')
             };
-            var LABEL_CONTACTS = __('Contacts');
+            var LABEL_CONTACTS = __('Chat');
             var LABEL_GROUPS = __('Groups');
             var HEADER_CURRENT_CONTACTS =  __('My contacts');
             var HEADER_PENDING_CONTACTS = __('Pending contacts');

@@ -47543,7 +47543,7 @@ return Backbone.BrowserStorage;
             _converse.chatboxes.onConnected();
             _converse.populateRoster();
             _converse.registerPresenceHandler();
-            _converse.giveFeedback(__('Contacts'));
+            _converse.giveFeedback(__('Chat'));
             if (reconnecting) {
                 _converse.xmppstatus.sendPresence();
             } else {
@@ -50655,7 +50655,7 @@ return __p
                 'xa': __('This contact is away for an extended period'),
                 'away': __('This contact is away')
             };
-            var LABEL_CONTACTS = __('Contacts');
+            var LABEL_CONTACTS = __('Chat');
             var LABEL_GROUPS = __('Groups');
             var HEADER_CURRENT_CONTACTS =  __('My contacts');
             var HEADER_PENDING_CONTACTS = __('Pending contacts');
@@ -51698,7 +51698,7 @@ return __p
                 xhr_user_search_url: ''
             });
 
-            var LABEL_CONTACTS = __('Contacts');
+            var LABEL_CONTACTS = __('Chat');
 
             _converse.addControlBox = function () {
                 return _converse.chatboxes.add({

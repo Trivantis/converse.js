@@ -198,7 +198,7 @@
                 xhr_user_search_url: ''
             });
 
-            var LABEL_CONTACTS = __('Contacts');
+            var LABEL_CONTACTS = __('Chat');
 
             _converse.addControlBox = function () {
                 return _converse.chatboxes.add({
