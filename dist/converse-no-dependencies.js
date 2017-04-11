@@ -10317,7 +10317,7 @@ return __p
                 insertRoster: function () {
                     /* Place the rosterview inside the "Contacts" panel.
                      */
-                    if( converse.show_contacts_tab )
+                    if( _converse.show_contacts_tab )
                         this.contactspanel.$el.append(_converse.rosterview.$el);
                     return this;
                 },
@@ -10332,7 +10332,7 @@ return __p
                 },
 
                 renderContactsPanel: function () {
-                    if( !converse.show_contacts_tab )
+                    if( !_converse.show_contacts_tab )
                     {
                         this.model.save({'active-panel': ROOMS_PANEL_ID});
                     }
@@ -10340,7 +10340,7 @@ return __p
                         this.model.save({'active-panel': USERS_PANEL_ID});
                     }
 
-                    if( converse.show_contacts_tab )
+                    if( _converse.show_contacts_tab )
                     {
                         this.contactspanel = new _converse.ContactsPanel({
                             '$parent': this.$el.find('.controlbox-panes')
