@@ -333,14 +333,7 @@
                 }, _converse.animate ? 100 : 0),
 
                 showHideFilter: function () {
-                    if (!this.$el.is(':visible')) {
-                        return;
-                    }
-                    if (this.$roster.hasScrollBar()) {
-                        this.filter_view.show();
-                    } else if (!this.filter_view.isActive()) {
-                        this.filter_view.hide();
-                    }
+                    this.filter_view.hide();
                     return this;
                 },
 
