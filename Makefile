@@ -18,7 +18,6 @@ SPHINXOPTS      =
 ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) ./docs/source
 SOURCES    = $(wildcard *.js) $(wildcard spec/*.js) $(wildcard src/*.js)
 JSHINTEXCEPTIONS = $(GENERATED) \
-           src/build-mobile.js \
            src/build-no-jquery.js \
            src/build-no-dependencies.js \
            src/build.js \
@@ -29,7 +28,7 @@ all: dev dist
 
 .PHONY: help
 help:
-	@echo "Please use \`make <target>' where <target> is one of the following:"
+	@echo "Please use make <target> where <target> is one of the following:"
 	@echo ""
 	@echo " all           A synonym for 'make dev'."
 	@echo " build         Create minified builds of converse.js and all its dependencies."
@@ -120,7 +119,7 @@ dev: stamp-bundler stamp-npm
 ## Builds
 
 .PHONY: css
-css: sass/*.scss css/converse.css css/converse.min.css css/mobile.min.css css/theme.min.css css/converse-muc-embedded.min.css
+css: sass/*.scss css/converse.css css/converse.min.css css/converse-muc-embedded.min.css
 
 css/converse-muc-embedded.css:: stamp-bundler sass
 	$(SASS) -I ./node_modules/bourbon/app/assets/stylesheets/ sass/_muc_embedded.scss css/converse-muc-embedded.css
@@ -134,11 +133,6 @@ css/converse.css:: stamp-bundler sass
 css/converse.min.css:: stamp-npm sass
 	$(CLEANCSS) css/converse.css > css/converse.min.css
 
-css/theme.min.css:: stamp-npm css/theme.css
-	$(CLEANCSS) css/theme.css > css/theme.min.css
-
-css/mobile.min.css:: stamp-npm sass
-	$(CLEANCSS) css/mobile.css > css/mobile.min.css
 
 .PHONY: watch
 watch: stamp-bundler
@@ -146,8 +140,6 @@ watch: stamp-bundler
 
 BUILDS = dist/converse.js \
 		 dist/converse.min.js \
-         dist/converse-mobile.js \
-         dist/converse-mobile.min.js \
          dist/converse-no-jquery.js \
  		 dist/converse-no-jquery.min.js \
 		 dist/converse-no-dependencies.min.js \
@@ -165,10 +157,6 @@ dist/converse-no-dependencies.min.js: src locale node_modules *.js
 	$(RJS) -o src/build-no-dependencies.js
 dist/converse-no-dependencies.js: src locale node_modules *.js
 	$(RJS) -o src/build-no-dependencies.js optimize=none out=dist/converse-no-dependencies.js
-dist/converse-mobile.min.js: src locale node_modules *.js
-	$(RJS) -o src/build.js paths.converse=src/converse-mobile include=converse out=dist/converse-mobile.min.js
-dist/converse-mobile.js: src locale node_modules *.js
-	$(RJS) -o src/build.js paths.converse=src/converse-mobile include=converse out=dist/converse-mobile.js optimize=none 
 
 .PHONY: jsmin
 jsmin: $(BUILDS)

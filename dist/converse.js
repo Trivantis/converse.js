@@ -52807,13 +52807,13 @@ obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<form class="pure-form pure-form-stacked converse-form add-chatroom" action="" method="post">\n    <fieldset>\n        <label>' +
+__p += '<form class="pure-form pure-form-stacked converse-form add-chatroom" action="" method="post">\n    <fieldset>\n        <label id="room-name-label">' +
 ((__t = (label_room_name)) == null ? '' : __t) +
-'</label>\n        <input type="text" name="chatroom" class="new-chatroom-name" placeholder="' +
+'</label>\n        <input type="text" name="chatroom" class="new-chatroom-name" id="room-name" placeholder="' +
 ((__t = (label_room_name)) == null ? '' : __t) +
 '"/>\n        ';
  if (server_input_type != 'hidden') { ;
-__p += '\n            <label' +
+__p += '\n            <label id="server-name-label" ' +
 ((__t = (server_label_global_attr)) == null ? '' : __t) +
 '>' +
 ((__t = (label_server)) == null ? '' : __t) +
@@ -52821,9 +52821,9 @@ __p += '\n            <label' +
  } ;
 __p += '\n        <input type="' +
 ((__t = (server_input_type)) == null ? '' : __t) +
-'" name="server" class="new-chatroom-server" placeholder="' +
+'" name="server" class="new-chatroom-server" id="server-name" placeholder="' +
 ((__t = (label_server)) == null ? '' : __t) +
-'"/>\n        <input type="submit" class="pure-button button-primary" name="join" value="' +
+'"/>\n        <input type="submit" class="pure-button button-primary" name="join" id="join-room" value="' +
 ((__t = (label_join)) == null ? '' : __t) +
 '"/>\n        <input type="button" class="pure-button button-secondary" name="show" id="show-rooms" value="' +
 ((__t = (label_show_rooms)) == null ? '' : __t) +
@@ -53595,7 +53595,9 @@ define("awesomplete", (function (global) {
                 muc_history_max_stanzas: undefined,
                 muc_instant_rooms: true,
                 muc_nickname_from_jid: false,
+                trim_after_pound: false,
                 muc_show_join_leave: true,
+                hide_muc_join_ctrls: false,
                 visible_toolbar_buttons: {
                     'toggle_occupants': true
                 },
@@ -54787,7 +54789,10 @@ define("awesomplete", (function (global) {
                     if (_converse.muc_nickname_from_jid) {
                         // We try to enter the room with the node part of
                         // the user's JID.
-                        this.join(Strophe.unescapeNode(Strophe.getNodeFromJid(_converse.bare_jid)));
+                        var theNick = Strophe.unescapeNode(Strophe.getNodeFromJid(_converse.bare_jid));
+                        if( _converse.trim_after_pound )
+                            theNick = theNick.slice( 0, theNick.lastIndexOf('#') );
+                        this.join( theNick );
                     } else {
                         this.renderNicknameForm(message);
                     }
@@ -55592,6 +55597,16 @@ define("awesomplete", (function (global) {
                     if (controlbox.get('active-panel') !== ROOMS_PANEL_ID) {
                         this.$el.addClass('hidden');
                     }
+
+                    if( _converse.hide_muc_join_ctrls )
+                    {
+                        $('input#server-name').hide();
+                        $('input#server-name-label').hide();
+                        $('input#join-room').hide();
+                        $('input#room-name').hide();
+                        $('input#room-name-label').hide();
+                    }
+
                     return this;
                 },
 
