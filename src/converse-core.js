@@ -255,6 +255,7 @@
             message_storage: 'session',
             password: undefined,
             prebind_url: null,
+            prebind_headers: null,
             priority: 0,
             registration_domain: '',
             rid: undefined,
@@ -268,7 +269,9 @@
             whitelisted_plugins: [],
             xhr_custom_status: false,
             xhr_custom_status_url: '',
-            show_send_button: false
+            show_send_button: false,
+            show_contacts_tab: true
+
         };
         _.assignIn(this, this.default_settings);
         // Allow only whitelisted configuration attributes to be overwritten
@@ -731,7 +734,7 @@
             _converse.chatboxes.onConnected();
             _converse.populateRoster();
             _converse.registerPresenceHandler();
-            _converse.giveFeedback(__('Contacts'));
+            _converse.giveFeedback(__('Chat'));
             if (reconnecting) {
                 _converse.xmppstatus.sendPresence();
             } else {
@@ -1849,6 +1852,7 @@
             var that = this;
             $.ajax({
                 url:  this.prebind_url,
+                headers: this.prebind_headers,
                 type: 'GET',
                 dataType: "json",
                 success: function (response) {

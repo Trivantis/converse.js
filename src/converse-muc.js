@@ -309,7 +309,9 @@
                 muc_history_max_stanzas: undefined,
                 muc_instant_rooms: true,
                 muc_nickname_from_jid: false,
+                trim_after_pound: false,
                 muc_show_join_leave: true,
+                hide_muc_join_ctrls: false,
                 visible_toolbar_buttons: {
                     'toggle_occupants': true
                 },
@@ -1501,7 +1503,10 @@
                     if (_converse.muc_nickname_from_jid) {
                         // We try to enter the room with the node part of
                         // the user's JID.
-                        this.join(Strophe.unescapeNode(Strophe.getNodeFromJid(_converse.bare_jid)));
+                        var theNick = Strophe.unescapeNode(Strophe.getNodeFromJid(_converse.bare_jid));
+                        if( _converse.trim_after_pound )
+                            theNick = theNick.slice( 0, theNick.lastIndexOf('#') );
+                        this.join( theNick );
                     } else {
                         this.renderNicknameForm(message);
                     }
@@ -2306,6 +2311,16 @@
                     if (controlbox.get('active-panel') !== ROOMS_PANEL_ID) {
                         this.$el.addClass('hidden');
                     }
+
+                    if( _converse.hide_muc_join_ctrls )
+                    {
+                        $('input#server-name').hide();
+                        $('input#server-name-label').hide();
+                        $('input#join-room').hide();
+                        $('input#room-name').hide();
+                        $('input#room-name-label').hide();
+                    }
+
                     return this;
                 },
 
@@ -2337,6 +2352,19 @@
                         $available_chatrooms = this.$el.find('#available-chatrooms');
                     this.rooms = $(iq).find('query').find('item');
                     if (this.rooms.length) {
+                        var compareFunc = function (a, b) {
+                            var nameA = Strophe.unescapeNode($(a).attr('name')||$(a).attr('jid')).toUpperCase();
+                            var nameB = Strophe.unescapeNode($(b).attr('name')||$(b).attr('jid')).toUpperCase();
+                              if (nameA<nameB) {
+                                return -1;
+                              }
+                              if (nameA>nameB) {
+                                return 1;
+                              }
+                              // a must be equal to b
+                              return 0;
+                        };
+                        this.rooms.sort( compareFunc );
                         // For translators: %1$s is a variable and will be
                         // replaced with the XMPP server name
                         $available_chatrooms.html('<dt>'+__('Rooms on %1$s',this.model.get('muc_domain'))+'</dt>');

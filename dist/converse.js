@@ -47066,6 +47066,7 @@ return Backbone.BrowserStorage;
             message_storage: 'session',
             password: undefined,
             prebind_url: null,
+            prebind_headers: null,
             priority: 0,
             registration_domain: '',
             rid: undefined,
@@ -47079,7 +47080,9 @@ return Backbone.BrowserStorage;
             whitelisted_plugins: [],
             xhr_custom_status: false,
             xhr_custom_status_url: '',
-            show_send_button: false
+            show_send_button: false,
+            show_contacts_tab: true
+
         };
         _.assignIn(this, this.default_settings);
         // Allow only whitelisted configuration attributes to be overwritten
@@ -47542,7 +47545,7 @@ return Backbone.BrowserStorage;
             _converse.chatboxes.onConnected();
             _converse.populateRoster();
             _converse.registerPresenceHandler();
-            _converse.giveFeedback(__('Contacts'));
+            _converse.giveFeedback(__('Chat'));
             if (reconnecting) {
                 _converse.xmppstatus.sendPresence();
             } else {
@@ -48660,6 +48663,7 @@ return Backbone.BrowserStorage;
             var that = this;
             $.ajax({
                 url:  this.prebind_url,
+                headers: this.prebind_headers,
                 type: 'GET',
                 dataType: "json",
                 success: function (response) {
@@ -50653,7 +50657,7 @@ return __p
                 'xa': __('This contact is away for an extended period'),
                 'away': __('This contact is away')
             };
-            var LABEL_CONTACTS = __('Contacts');
+            var LABEL_CONTACTS = __('Chat');
             var LABEL_GROUPS = __('Groups');
             var HEADER_CURRENT_CONTACTS =  __('My contacts');
             var HEADER_PENDING_CONTACTS = __('Pending contacts');
@@ -50900,14 +50904,7 @@ return __p
                 }, _converse.animate ? 100 : 0),
 
                 showHideFilter: function () {
-                    if (!this.$el.is(':visible')) {
-                        return;
-                    }
-                    if (this.$roster.hasScrollBar()) {
-                        this.filter_view.show();
-                    } else if (!this.filter_view.isActive()) {
-                        this.filter_view.hide();
-                    }
+                    this.filter_view.hide();
                     return this;
                 },
 
@@ -51541,6 +51538,8 @@ return __p
     "use strict";
 
     var USERS_PANEL_ID = 'users';
+    var ROOMS_PANEL_ID = 'chatrooms'
+
     // Strophe methods for building stanzas
     var Strophe = converse.env.Strophe,
         utils = converse.env.utils;
@@ -51688,6 +51687,7 @@ return __p
                 __ = _converse.__;
 
             this.updateSettings({
+                show_contacts_tab: true,
                 allow_logout: true,
                 default_domain: undefined,
                 show_controlbox_by_default: false,
@@ -51696,7 +51696,7 @@ return __p
                 xhr_user_search_url: ''
             });
 
-            var LABEL_CONTACTS = __('Contacts');
+            var LABEL_CONTACTS = __('Chat');
 
             _converse.addControlBox = function () {
                 return _converse.chatboxes.add({
@@ -51762,7 +51762,8 @@ return __p
                 insertRoster: function () {
                     /* Place the rosterview inside the "Contacts" panel.
                      */
-                    this.contactspanel.$el.append(_converse.rosterview.$el);
+                    if( _converse.show_contacts_tab )
+                        this.contactspanel.$el.append(_converse.rosterview.$el);
                     return this;
                 },
 
@@ -51776,13 +51777,22 @@ return __p
                 },
 
                 renderContactsPanel: function () {
-                    if (_.isUndefined(this.model.get('active-panel'))) {
+                    if( !_converse.show_contacts_tab )
+                    {
+                        this.model.save({'active-panel': ROOMS_PANEL_ID});
+                    }
+                    else if (_.isUndefined(this.model.get('active-panel'))) {
                         this.model.save({'active-panel': USERS_PANEL_ID});
                     }
-                    this.contactspanel = new _converse.ContactsPanel({
-                        '$parent': this.$el.find('.controlbox-panes')
-                    });
-                    this.contactspanel.render();
+
+                    if( _converse.show_contacts_tab )
+                    {
+                        this.contactspanel = new _converse.ContactsPanel({
+                            '$parent': this.$el.find('.controlbox-panes')
+                        });
+                        this.contactspanel.render();
+                    }
+
                     _converse.xmppstatusview = new _converse.XMPPStatusView({
                         'model': _converse.xmppstatus
                     });
@@ -52797,13 +52807,13 @@ obj || (obj = {});
 var __t, __p = '', __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<form class="pure-form pure-form-stacked converse-form add-chatroom" action="" method="post">\n    <fieldset>\n        <label>' +
+__p += '<form class="pure-form pure-form-stacked converse-form add-chatroom" action="" method="post">\n    <fieldset>\n        <label id="room-name-label">' +
 ((__t = (label_room_name)) == null ? '' : __t) +
-'</label>\n        <input type="text" name="chatroom" class="new-chatroom-name" placeholder="' +
+'</label>\n        <input type="text" name="chatroom" class="new-chatroom-name" id="room-name" placeholder="' +
 ((__t = (label_room_name)) == null ? '' : __t) +
 '"/>\n        ';
  if (server_input_type != 'hidden') { ;
-__p += '\n            <label' +
+__p += '\n            <label id="server-name-label" ' +
 ((__t = (server_label_global_attr)) == null ? '' : __t) +
 '>' +
 ((__t = (label_server)) == null ? '' : __t) +
@@ -52811,9 +52821,9 @@ __p += '\n            <label' +
  } ;
 __p += '\n        <input type="' +
 ((__t = (server_input_type)) == null ? '' : __t) +
-'" name="server" class="new-chatroom-server" placeholder="' +
+'" name="server" class="new-chatroom-server" id="server-name" placeholder="' +
 ((__t = (label_server)) == null ? '' : __t) +
-'"/>\n        <input type="submit" class="pure-button button-primary" name="join" value="' +
+'"/>\n        <input type="submit" class="pure-button button-primary" name="join" id="join-room" value="' +
 ((__t = (label_join)) == null ? '' : __t) +
 '"/>\n        <input type="button" class="pure-button button-secondary" name="show" id="show-rooms" value="' +
 ((__t = (label_show_rooms)) == null ? '' : __t) +
@@ -53585,7 +53595,9 @@ define("awesomplete", (function (global) {
                 muc_history_max_stanzas: undefined,
                 muc_instant_rooms: true,
                 muc_nickname_from_jid: false,
+                trim_after_pound: false,
                 muc_show_join_leave: true,
+                hide_muc_join_ctrls: false,
                 visible_toolbar_buttons: {
                     'toggle_occupants': true
                 },
@@ -54777,7 +54789,10 @@ define("awesomplete", (function (global) {
                     if (_converse.muc_nickname_from_jid) {
                         // We try to enter the room with the node part of
                         // the user's JID.
-                        this.join(Strophe.unescapeNode(Strophe.getNodeFromJid(_converse.bare_jid)));
+                        var theNick = Strophe.unescapeNode(Strophe.getNodeFromJid(_converse.bare_jid));
+                        if( _converse.trim_after_pound )
+                            theNick = theNick.slice( 0, theNick.lastIndexOf('#') );
+                        this.join( theNick );
                     } else {
                         this.renderNicknameForm(message);
                     }
@@ -55582,6 +55597,16 @@ define("awesomplete", (function (global) {
                     if (controlbox.get('active-panel') !== ROOMS_PANEL_ID) {
                         this.$el.addClass('hidden');
                     }
+
+                    if( _converse.hide_muc_join_ctrls )
+                    {
+                        $('input#server-name').hide();
+                        $('input#server-name-label').hide();
+                        $('input#join-room').hide();
+                        $('input#room-name').hide();
+                        $('input#room-name-label').hide();
+                    }
+
                     return this;
                 },
 
@@ -55613,6 +55638,19 @@ define("awesomplete", (function (global) {
                         $available_chatrooms = this.$el.find('#available-chatrooms');
                     this.rooms = $(iq).find('query').find('item');
                     if (this.rooms.length) {
+                        var compareFunc = function (a, b) {
+                            var nameA = Strophe.unescapeNode($(a).attr('name')||$(a).attr('jid')).toUpperCase();
+                            var nameB = Strophe.unescapeNode($(b).attr('name')||$(b).attr('jid')).toUpperCase();
+                              if (nameA<nameB) {
+                                return -1;
+                              }
+                              if (nameA>nameB) {
+                                return 1;
+                              }
+                              // a must be equal to b
+                              return 0;
+                        };
+                        this.rooms.sort( compareFunc );
                         // For translators: %1$s is a variable and will be
                         // replaced with the XMPP server name
                         $available_chatrooms.html('<dt>'+__('Rooms on %1$s',this.model.get('muc_domain'))+'</dt>');
