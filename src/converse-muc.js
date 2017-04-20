@@ -2320,8 +2320,6 @@
                         $('input#room-name').hide();
                         $('label#room-name-label').hide();
                     }
-                    
-                    this.showRooms();
 
                     return this;
                 },
