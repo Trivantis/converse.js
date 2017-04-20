@@ -726,7 +726,7 @@
                     // seconds later be hidden in favor of the control box).
                     return this.$el.html(
                         tpl_controlbox_toggle({
-                            'label_toggle': __('Toggle chat')
+                            'label_toggle': __('Chat')
                         })
                     );
                 },

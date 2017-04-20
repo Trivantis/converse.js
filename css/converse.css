@@ -2128,7 +2128,7 @@
   height: calc(100% - 50px - 20px);
   overflow: hidden;
   padding: 0;
-  padding-bottom: 100px;
+  padding-bottom: 3em;
   /* Custom addition for CSP */ }
   #conversejs #converse-roster.no-contact-requests {
     height: calc(100% - 25px - 20px); }
@@ -2143,7 +2143,8 @@
     /* (jQ addClass:) if input has value: */
     /* (jQ addClass:) if mouse is over the 'x' input area*/ }
     #conversejs #converse-roster .roster-filter-form .roster-filter {
-      float: left;
+      display: block;
+      float: none;
       background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABNSURBVHjaXI7BDcAwCAMvyQjMyQ6dAbZiKfqoUK34g2zJh1dENIC7M8pMAPYdzAVY3d0ajNz9aypS/b5R6o+ZPdqoKgCq6h80KH3xDgBqNR97p8oAGQAAAABJRU5ErkJggg==) no-repeat right -20px center;
       border: 1px solid #999;
       font-size: 14px;
@@ -2151,31 +2152,32 @@
       margin: 0;
       padding: 0;
       padding-left: 0.4em;
-      width: 53%; }
+      width: 170px; }
     #conversejs #converse-roster .roster-filter-form .roster-filter.x {
       background-position: right 3px center; }
     #conversejs #converse-roster .roster-filter-form .roster-filter.onX {
       cursor: pointer; }
     #conversejs #converse-roster .roster-filter-form .state-type {
-      float: left;
+      float: none;
       border: 1px solid #999;
       font-size: calc(14px - 2px);
       height: 25px;
-      margin: 0;
+      margin: 5px 0 0 0;
       padding: 0;
       padding-left: 0.4em;
-      width: 53%; }
+      width: 170px; }
     #conversejs #converse-roster .roster-filter-form .filter-type {
       display: table-cell;
-      float: right;
+      float: none;
       font-size: calc(14px - 2px);
       height: 25px;
       padding: 0;
-      width: 47%;
+      width: 170px;
+      margin: 5px 0 0 0;
       border-radius: 0;
       border: 1px solid; }
   #conversejs #converse-roster .roster-contacts {
-    margin: 10px 0 0 0;
+    margin: 0;
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto; }

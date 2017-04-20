@@ -52221,7 +52221,7 @@ return __p
                     // seconds later be hidden in favor of the control box).
                     return this.$el.html(
                         tpl_controlbox_toggle({
-                            'label_toggle': __('Toggle chat')
+                            'label_toggle': __('Chat')
                         })
                     );
                 },
@@ -55584,7 +55584,7 @@ define("awesomplete", (function (global) {
                                 'label_nickname': __('Nickname'),
                                 'label_server': __('Server'),
                                 'label_join': __('Join Room'),
-                                'label_show_rooms': __('Show rooms')
+                                'label_show_rooms': __('Refresh List')
                             })
                         ));
                     this.$tabs = this.$parent.parent().find('#controlbox-tabs');
@@ -55601,11 +55601,13 @@ define("awesomplete", (function (global) {
                     if( _converse.hide_muc_join_ctrls )
                     {
                         $('input#server-name').hide();
-                        $('input#server-name-label').hide();
+                        $('label#server-name-label').hide();
                         $('input#join-room').hide();
                         $('input#room-name').hide();
-                        $('input#room-name-label').hide();
+                        $('label#room-name-label').hide();
                     }
+                    
+                    this.showRooms();
 
                     return this;
                 },
