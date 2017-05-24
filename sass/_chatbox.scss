@@ -62,8 +62,8 @@
         display: inline-block;
         float: right;
         font-size: $box-close-font-size;
-        margin: 0 0.2em;
-        padding: 0.3em;
+        margin: 0 0.7em 0 0;
+        padding: 10px;
         text-decoration: none;
         &:active {
             position: relative;
@@ -80,7 +80,7 @@
         float: right;
         height: $bottom-gutter-height;
         margin: 0 $chat-gutter;
-        width: $chat-width;
+        width: $chat-width-90;
         @media screen and (max-height: $mobile-landscape-height) {
             margin: 0;
             width: $mobile-chat-width;
@@ -100,15 +100,16 @@
             @media screen and (max-height: $mobile-landscape-height) {
                 height: $mobile-chat-height;
                 width: $mobile-chat-width;
-                height: 100vh;
+                height: 90vh;
             }
             @media screen and (max-width: $mobile-portrait-length) {
                 height: $mobile-chat-height;
                 width: $mobile-chat-width;
-                height: 100vh;
+                height: 90vh;
             }
         }
         .chat-title {
+            margin:10px 0 0 10px;
             color: $chat-head-text-color;
             line-height: 15px;
             display: block;
@@ -343,6 +344,8 @@
                 .toggle-smiley {
                     color: $link-color;
                     padding-left: 5px;
+                    position:relative;
+                    top:-6px;
                     ul {
                         left: 0;
                         li {
