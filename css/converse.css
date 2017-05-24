@@ -1461,7 +1461,7 @@
   display: inline-block;
   float: right;
   font-size: 12px;
-  margin: 0 0.7em 0 0;
+  margin: 0 0 0 0;
   padding: 10px;
   text-decoration: none; }
   #converse-embedded-chat .chatbox-btn:active,
