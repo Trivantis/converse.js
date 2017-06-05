@@ -1101,7 +1101,7 @@
     #conversejs {
       margin: 0;
       right: 10px;
-      left: 10px;
+      left: 0px;
       bottom: 5px; } }
   @media screen and (max-height: 450px) {
     #conversejs {
@@ -1460,7 +1460,7 @@
   cursor: pointer;
   display: inline-block;
   float: right;
-  font-size: 12px;
+  font-size: 16px;
   margin: 0 0 0 0;
   padding: 10px;
   text-decoration: none; }
