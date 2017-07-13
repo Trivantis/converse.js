@@ -4,7 +4,7 @@
     color: $text-color;
     direction: ltr;
     display: block;
-    font-family: "Roboto", "Arial", "Helvetica", sans-serif;
+    font-family: "Helvetica", "Arial", sans-serif;
     font-size: $font-size;
     height: $bottom-gutter-height;
     position: fixed;
@@ -20,8 +20,21 @@
         width: 100vw;
     }
 
+
+	::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: $subdued-color;
+	}
+	::-moz-placeholder { /* Firefox 19+ */
+        color: $subdued-color;
+	}
+	:-ms-input-placeholder { /* IE 10+ */
+        color: $subdued-color;
+	}
+	:-moz-placeholder { /* Firefox 18- */
+        color: $subdued-color;
+	}
     ::placeholder {
-        color: #BBB;
+        color: $subdued-color;
     }
 
     .circle {
@@ -99,7 +112,7 @@
         text-align: center;
         display: block;
         margin: 0;
-        padding: 50% 0;
+        padding: 10% 0;
     }
     .hor_centered {
         text-align: center;
@@ -121,7 +134,7 @@
     }
 
     .error {
-        color: red;
+        color: $error-color;
     }
     .reg-feedback {
         font-size: 85%;
@@ -164,7 +177,7 @@
     }
     .button-cancel {
         color: white;
-        background-color: $warning-color;
+        background-color: $text-color;
     }
 
     form {
@@ -193,7 +206,7 @@
                 border: none;
             }
             input.error {
-                border: 1px solid red;
+                border: 1px solid $error-color;
                 color: $text-color;
             }
             .form-help {

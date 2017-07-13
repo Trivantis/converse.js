@@ -19,16 +19,6 @@
         }
     }
     .chat-head {
-        border-top-left-radius: $chatbox-border-radius;
-        border-top-right-radius: $chatbox-border-radius;
-        @media screen and (max-height: $mobile-landscape-height) {
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
-        @media screen and (max-width: $mobile-portrait-length) {
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
         color: #ffffff;
         font-size: 100%;
         height: $chat-head-height;
@@ -62,8 +52,8 @@
         display: inline-block;
         float: right;
         font-size: $box-close-font-size;
-        margin: 0 0 0 0;
-        padding: 10px;
+        margin: 0 0.2em;
+        padding: 0.3em;
         text-decoration: none;
         &:active {
             position: relative;
@@ -80,7 +70,7 @@
         float: right;
         height: $bottom-gutter-height;
         margin: 0 $chat-gutter;
-        width: $chat-width-90;
+        width: $chat-width;
         @media screen and (max-height: $mobile-landscape-height) {
             margin: 0;
             width: $mobile-chat-width;
@@ -91,7 +81,7 @@
         }
         .box-flyout {
             background-color: white;
-            border:1px solid #303030;
+            box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
             height: $chat-height;
             min-height: $chat-height/2;
             min-width: $chat-width;
@@ -100,16 +90,16 @@
             @media screen and (max-height: $mobile-landscape-height) {
                 height: $mobile-chat-height;
                 width: $mobile-chat-width;
-                height: 90vh;
+                height: 100vh;
             }
             @media screen and (max-width: $mobile-portrait-length) {
                 height: $mobile-chat-height;
                 width: $mobile-chat-width;
-                height: 90vh;
+                height: 100vh;
             }
         }
         .chat-title {
-            margin:10px 0 0 10px;
+            margin:5px 0 0 5px;
             color: $chat-head-text-color;
             line-height: 15px;
             display: block;
@@ -119,9 +109,6 @@
                 color: $chat-head-text-color;
                 width: 100%;
             }
-        }
-        .chatroom-topic {
-            color: $chat-head-topic-color;
         }
         .chat-body {
             background-color: white;
@@ -145,7 +132,9 @@
                 padding: 5px;
             }
             .chat-info {
-                color: $warning-color;
+                line-height: $line-height-small;
+                color: $chat-head-color;
+                font-size: $font-size-small;
                 margin: 0.3em;
                 &.chat-event {
                     clear: left;
@@ -161,8 +150,8 @@
                 }
             }
             .chat-image {
+                max-height: 24em;
                 max-width: 100%;
-                max-height: 100%;
             }
             .chat-action {
                 font-style: italic;
@@ -170,9 +159,7 @@
             .chat-message {
                 margin: 0.3em;
                 span {
-                    display: inline-block;
                     &.chat-msg-author {
-                        max-width: 100%;
                         font-weight: bold;
                         white-space: nowrap;
                         float: left;
@@ -188,7 +175,6 @@
                     &.chat-msg-content {
                         max-width: 100%;
                         word-wrap: break-word;
-                        font-family:"Raleway";
                     }
                 }
             }
@@ -207,10 +193,11 @@
             cursor: pointer;
             background-color: $chat-head-color;
             color: $light-background-color;
-            padding: 0.3em;
+            padding: 0.5em;
             font-size: 0.9em;
             text-align: center;
             z-index: 20;
+            white-space: nowrap;
         }
         .chat-content {
             position: relative;
@@ -241,7 +228,6 @@
             -webkit-background-clip: padding-box;
             @include border-bottom-radius($chatbox-border-radius);
             background-clip: padding-box;
-            background: white;
             border-top: 1px solid #BBB;
             border: 0;
             margin: 0;
@@ -276,7 +262,6 @@
             }
             .chat-toolbar {
                 box-sizing: border-box;
-                font-size: $font-size;
                 margin: 0;
                 padding: 5px;
                 height: $toolbar-height;
@@ -284,18 +269,27 @@
                 background-color: $toolbar-color;
                 a {
                     font-size: $font-size;
-                    color: $link-color;
+                    color: $text-color;
                     text-decoration: none;
                     text-shadow: none;
+                }
+                .toolbar-picker-panel {
+                    a {
+                        color: $link-color;
+                    }
                 }
                 .chat-toolbar-text {
                     font-size: 12px;
                     padding-right: 3px;
-                    text-shadow: 0 1px 0 white
                 }
                 .unencrypted a,
                 .unencrypted {
-                    color: $warning-color;
+                    color: $text-color;
+                    .toolbar-picker-panel {
+                        a {
+                            color: $link-color;
+                        }
+                    }
                 }
                 .unverified a,
                 .unverified {
@@ -342,10 +336,8 @@
                     margin-left: 0;
                 }
                 .toggle-smiley {
-                    color: $link-color;
+                    color: $text-color;
                     padding-left: 5px;
-                    position:relative;
-                    top:-6px;
                     ul {
                         left: 0;
                         li {
