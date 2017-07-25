@@ -312,6 +312,8 @@
                 trim_after_pound: false,
                 muc_show_join_leave: true,
                 hide_muc_join_ctrls: false,
+                render_muc_features:true,
+                allow_create_muc:true,
                 visible_toolbar_buttons: {
                     'toggle_occupants': true
                 },
@@ -1425,17 +1427,21 @@
                      *      case, auto-configure won't happen, regardless of
                      *      the settings.
                      */
-                    if (_.isUndefined(ev) && this.model.get('auto_configure')) {
+                    if( _converse.allow_create_muc )
+                    {
+                        if (_.isUndefined(ev) && this.model.get('auto_configure')) {
                         this.fetchRoomConfiguration().then(
                             this.autoConfigureChatRoom.bind(this));
-                    } else {
-                        if (!_.isUndefined(ev) && ev.preventDefault) {
-                            ev.preventDefault();
+                        } else {
+                            if (!_.isUndefined(ev) && ev.preventDefault) {
+                                ev.preventDefault();
+                            }
+                            this.showSpinner();
+                            this.fetchRoomConfiguration().then(
+                                this.renderConfigurationForm.bind(this));
                         }
-                        this.showSpinner();
-                        this.fetchRoomConfiguration().then(
-                            this.renderConfigurationForm.bind(this));
                     }
+                    
                 },
 
                 submitNickname: function (ev) {
@@ -2049,42 +2055,47 @@
                 },
 
                 renderRoomFeatures: function () {
-                    var picks = _.pick(this.chatroomview.model.attributes, ROOM_FEATURES),
+
+                    if( _converse.render_muc_features )
+                    {
+                        var picks = _.pick(this.chatroomview.model.attributes, ROOM_FEATURES),
                         iteratee = function (a, v) { return a || v; },
                         el = this.el.querySelector('.chatroom-features');
 
-                    el.innerHTML = tpl_chatroom_features(
-                            _.extend(this.chatroomview.model.toJSON(), {
-                                'has_features': _.reduce(_.values(picks), iteratee),
-                                'label_features': __('Features'),
-                                'label_hidden': __('Hidden'),
-                                'label_mam_enabled': __('Message archiving'),
-                                'label_membersonly': __('Members only'),
-                                'label_moderated': __('Moderated'),
-                                'label_nonanonymous': __('Non-anonymous'),
-                                'label_open': __('Open'),
-                                'label_passwordprotected': __('Password protected'),
-                                'label_persistent': __('Persistent'),
-                                'label_public': __('Public'),
-                                'label_semianonymous': __('Semi-anonymous'),
-                                'label_temporary': __('Temporary'),
-                                'label_unmoderated': __('Unmoderated'),
-                                'label_unsecured': __('Unsecured'),
-                                'tt_hidden': __('This room is not publicly searchable'),
-                                'tt_mam_enabled': __('Messages are archived on the server'),
-                                'tt_membersonly': __('This room is restricted to members only'),
-                                'tt_moderated': __('This room is being moderated'),
-                                'tt_nonanonymous': __('All other room occupants can see your Jabber ID'),
-                                'tt_open': __('Anyone can join this room'),
-                                'tt_passwordprotected': __('This room requires a password before entry'),
-                                'tt_persistent': __('This room persists even if it\'s unoccupied'),
-                                'tt_public': __('This room is publicly searchable'),
-                                'tt_semianonymous': __('Only moderators can see your Jabber ID'),
-                                'tt_temporary': __('This room will disappear once the last person leaves'),
-                                'tt_unmoderated': __('This room is not being moderated'),
-                                'tt_unsecured': __('This room does not require a password upon entry')
-                            }));
-                    this.setOccupantsHeight();
+                        el.innerHTML = tpl_chatroom_features(
+                                _.extend(this.chatroomview.model.toJSON(), {
+                                    'has_features': _.reduce(_.values(picks), iteratee),
+                                    'label_features': __('Features'),
+                                    'label_hidden': __('Hidden'),
+                                    'label_mam_enabled': __('Message archiving'),
+                                    'label_membersonly': __('Members only'),
+                                    'label_moderated': __('Moderated'),
+                                    'label_nonanonymous': __('Non-anonymous'),
+                                    'label_open': __('Open'),
+                                    'label_passwordprotected': __('Password protected'),
+                                    'label_persistent': __('Persistent'),
+                                    'label_public': __('Public'),
+                                    'label_semianonymous': __('Semi-anonymous'),
+                                    'label_temporary': __('Temporary'),
+                                    'label_unmoderated': __('Unmoderated'),
+                                    'label_unsecured': __('Unsecured'),
+                                    'tt_hidden': __('This room is not publicly searchable'),
+                                    'tt_mam_enabled': __('Messages are archived on the server'),
+                                    'tt_membersonly': __('This room is restricted to members only'),
+                                    'tt_moderated': __('This room is being moderated'),
+                                    'tt_nonanonymous': __('All other room occupants can see your Jabber ID'),
+                                    'tt_open': __('Anyone can join this room'),
+                                    'tt_passwordprotected': __('This room requires a password before entry'),
+                                    'tt_persistent': __('This room persists even if it\'s unoccupied'),
+                                    'tt_public': __('This room is publicly searchable'),
+                                    'tt_semianonymous': __('Only moderators can see your Jabber ID'),
+                                    'tt_temporary': __('This room will disappear once the last person leaves'),
+                                    'tt_unmoderated': __('This room is not being moderated'),
+                                    'tt_unsecured': __('This room does not require a password upon entry')
+                                }));
+                        this.setOccupantsHeight();
+                    }
+                    
                     return this;
                 },
 
