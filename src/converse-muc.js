@@ -184,10 +184,13 @@
                 },
 
                 setMUCDomain: function (domain) {
-                    this.roomspanel.model.save({'muc_domain': domain});
+                    if( this.roomspanel ){
+                        this.roomspanel.model.save({'muc_domain': domain});
+                        domain = this.roomspanel.model.get('muc_domain')
+                    }
                     var $server= this.$el.find('input.new-chatroom-server');
                     if (!$server.is(':focus')) {
-                        $server.val(this.roomspanel.model.get('muc_domain'));
+                        $server.val(domain);
                     }
                 },
 
