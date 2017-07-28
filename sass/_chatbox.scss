@@ -80,7 +80,7 @@
             width: $mobile-chat-width;
         }
         .box-flyout {
-            background-color: white;
+            background-color:transparent;
             box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
             height: $chat-height;
             min-height: $chat-height/2;
@@ -90,12 +90,12 @@
             @media screen and (max-height: $mobile-landscape-height) {
                 height: $mobile-chat-height;
                 width: $mobile-chat-width;
-                height: 100vh;
+                height:84vh;
             }
             @media screen and (max-width: $mobile-portrait-length) {
                 height: $mobile-chat-height;
                 width: $mobile-chat-width;
-                height: 100vh;
+                height:91vh;
             }
         }
         .chat-title {

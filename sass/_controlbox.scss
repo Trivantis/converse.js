@@ -24,7 +24,7 @@
             }
             color: $chat-head-inverse-text-color;
             height: $chat-head-height;
-            margin: 0;
+            margin: 65px 0 0 0;
             padding: 6px 6px 6px 0;
         }
         form.search-xmpp-contact {
@@ -465,7 +465,11 @@
         float: right;
         height: 100%;
         margin: 0 $chat-gutter;
-        padding: 10px 8px 0 8px;
+        padding: 5px 8px 0 8px;
+        border-left:2px solid white;
+        border-top:2px solid white;
+        border-right:2px solid white;
+        font-size:15px;
         span {
             color: $inverse-link-color;
         }
