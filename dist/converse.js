@@ -31955,9 +31955,13 @@ return __p
             if ($.browser.webkit && window.requestAnimationFrame) {
                 window.requestAnimationFrame(function () {
                     var conversejs = document.getElementById('conversejs');
-                    conversejs.style.display = 'none';
-                    var tmp = conversejs.offsetHeight; // jshint ignore:line
-                    conversejs.style.display = 'block';
+
+                    if( conversejs )
+                    {
+                        conversejs.style.display = 'none';
+                        var tmp = conversejs.offsetHeight; // jshint ignore:line
+                        conversejs.style.display = 'block';
+                    }
                 });
             }
         },
