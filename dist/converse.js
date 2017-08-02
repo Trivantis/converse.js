@@ -50647,6 +50647,7 @@ return __p
                 allow_chat_pending_contacts: true,
                 allow_contact_removal: true,
                 show_toolbar: true,
+                hide_roster_filter: false
             });
 
             var STATUSES = {
@@ -50849,7 +50850,10 @@ return __p
 
                 render: function () {
                     this.renderRoster();
-                    this.$el.html(this.filter_view.render());
+                    if( _converse.hide_roster_filter )
+                    {
+                        this.$el.html(this.filter_view.render());
+                    }
                     if (!_converse.allow_contact_requests) {
                         // XXX: if we ever support live editing of config then
                         // we'll need to be able to remove this class on the fly.
