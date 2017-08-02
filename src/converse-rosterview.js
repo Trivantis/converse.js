@@ -279,7 +279,7 @@
 
                 render: function () {
                     this.renderRoster();
-                    if( _converse.hide_roster_filter )
+                    if( !_converse.hide_roster_filter )
                     {
                         this.$el.html(this.filter_view.render());
                     }
