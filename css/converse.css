@@ -1102,13 +1102,13 @@
     #conversejs {
       margin: 0;
       right: 10px;
-      left: 10px;
+      left: 0px;
       bottom: 5px; } }
   @media screen and (max-height: 450px) {
     #conversejs {
       margin: 0;
       right: 10px;
-      left: 10px;
+      left: 0px;
       bottom: 5px; } }
   #conversejs ul li {
     height: auto; }
@@ -1465,7 +1465,7 @@
   cursor: pointer;
   display: inline-block;
   float: right;
-  font-size: 12px;
+  font-size: 16px;
   margin: 0 0.2em;
   padding: 0.3em;
   text-decoration: none; }
@@ -1483,7 +1483,7 @@
   text-align: left;
   float: right;
   height: 35px;
-  margin: 0 0.5em;
+  margin: 0 0.618em;
   width: 200px; }
   @media screen and (max-height: 450px) {
     #converse-embedded-chat .chatbox,
@@ -1497,7 +1497,7 @@
       width: 100%; } }
   #converse-embedded-chat .chatbox .box-flyout,
   #conversejs .chatbox .box-flyout {
-    background-color: white;
+    background-color: transparent;
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
     height: 450px;
     min-height: 225px;
@@ -1509,13 +1509,13 @@
       #conversejs .chatbox .box-flyout {
         height: 400px;
         width: 100%;
-        height: 100vh; } }
+        height: 84vh; } }
     @media screen and (max-width: 480px) {
       #converse-embedded-chat .chatbox .box-flyout,
       #conversejs .chatbox .box-flyout {
         height: 400px;
         width: 100%;
-        height: 100vh; } }
+        height: 91vh; } }
   #converse-embedded-chat .chatbox .chat-title,
   #conversejs .chatbox .chat-title {
     margin: 5px 0 0 5px;
@@ -1821,7 +1821,7 @@
       left: 0; }
 
 #conversejs #controlbox {
-  margin-right: 1em; }
+  margin-right: 1.236em; }
   #conversejs #controlbox .pure-form.converse-form {
     padding: 0; }
   @media screen and (max-width: 480px) {
@@ -1836,7 +1836,7 @@
     border-top-right-radius: 0px;
     color: white;
     height: 55px;
-    margin: 0;
+    margin: 65px 0 0 0;
     padding: 6px 6px 6px 0; }
     @media screen and (max-height: 450px) {
       #conversejs #controlbox .controlbox-head {
@@ -2162,8 +2162,12 @@
   color: #0a0a0a;
   float: right;
   height: 100%;
-  margin: 0 0.5em;
-  padding: 10px 8px 0 8px; }
+  margin: 0 0.618em;
+  padding: 5px 8px 0 8px;
+  border-left: 2px solid white;
+  border-top: 2px solid white;
+  border-right: 2px solid white;
+  font-size: 15px; }
   #conversejs .toggle-controlbox span {
     color: white; }
 
@@ -2577,7 +2581,7 @@
   float: right;
   font-weight: bold;
   height: 100%;
-  margin: 0 0.5em;
+  margin: 0 0.618em;
   padding: 0;
   width: 130px; }
   #conversejs #minimized-chats #toggle-minimized-chats {
