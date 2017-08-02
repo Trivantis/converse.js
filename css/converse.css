@@ -1838,6 +1838,9 @@
     height: 55px;
     margin: 65px 0 0 0;
     padding: 6px 6px 6px 0; }
+    @media screen and (max-height: 1280px) {
+      #conversejs #controlbox .controlbox-head {
+        margin: 0; } }
     @media screen and (max-height: 450px) {
       #conversejs #controlbox .controlbox-head {
         border-top-left-radius: 0;
