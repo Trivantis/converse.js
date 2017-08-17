@@ -52583,7 +52583,7 @@ with (obj) {
  if (show_emoticons)  { ;
 __p += '\n    <li class="toggle-smiley icon-happy" title="' +
 __e(label_insert_smiley) +
-'">\n        <ul>\n            <li><a class="icon-smiley" href="#" data-emoticon=":)"></a></li>\n            <li><a class="icon-wink" href="#" data-emoticon=";)"></a></li>\n            <li><a class="icon-grin" href="#" data-emoticon=":D"></a></li>\n            <li><a class="icon-tongue" href="#" data-emoticon=":P"></a></li>\n            <li><a class="icon-cool" href="#" data-emoticon="8)"></a></li>\n            <li><a class="icon-evil" href="#" data-emoticon=">:)"></a></li>\n            <li><a class="icon-confused" href="#" data-emoticon=":S"></a></li>\n            <li><a class="icon-wondering" href="#" data-emoticon=":\\"></a></li>\n            <li><a class="icon-angry" href="#" data-emoticon=">:("></a></li>\n            <li><a class="icon-sad" href="#" data-emoticon=":("></a></li>\n            <li><a class="icon-shocked" href="#" data-emoticon=":O"></a></li>\n            <li><a class="icon-thumbs-up" href="#" data-emoticon="(^.^)b"></a></li>\n            <li><a class="icon-heart" href="#" data-emoticon="<3"></a></li>\n        </ul>\n    </li>\n';
+'">\n        <ul>\n            <li><a class="icon-smiley" data-emoticon=":)"></a></li>\n            <li><a class="icon-wink" data-emoticon=";)"></a></li>\n            <li><a class="icon-grin" data-emoticon=":D"></a></li>\n            <li><a class="icon-tongue" data-emoticon=":P"></a></li>\n            <li><a class="icon-cool" data-emoticon="8)"></a></li>\n            <li><a class="icon-evil" data-emoticon=">:)"></a></li>\n            <li><a class="icon-confused" data-emoticon=":S"></a></li>\n            <li><a class="icon-wondering" data-emoticon=":\\"></a></li>\n            <li><a class="icon-angry" data-emoticon=">:("></a></li>\n            <li><a class="icon-sad" data-emoticon=":("></a></li>\n            <li><a class="icon-shocked" data-emoticon=":O"></a></li>\n            <li><a class="icon-thumbs-up" data-emoticon="(^.^)b"></a></li>\n            <li><a class="icon-heart" data-emoticon="<3"></a></li>\n        </ul>\n    </li>\n';
  } ;
 __p += '\n';
  if (show_call_button)  { ;
@@ -54835,7 +54835,7 @@ define("awesomplete", (function (global) {
                      */
                     if (_converse.muc_nickname_from_jid) {
                         var nick = presence.getAttribute('from').split('/')[1];
-                        if (nick === this.getDefaultNickName()) {
+                        if (nick === this.getDefaultNickName() || nick.lastIndexOf("-") == -1 ) {
                             this.join(nick + '-2');
                         } else {
                             var del= nick.lastIndexOf("-");
