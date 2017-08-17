@@ -1541,7 +1541,7 @@
                      */
                     if (_converse.muc_nickname_from_jid) {
                         var nick = presence.getAttribute('from').split('/')[1];
-                        if (nick === this.getDefaultNickName()) {
+                        if (nick === this.getDefaultNickName() || nick.lastIndexOf("-") == -1 ) {
                             this.join(nick + '-2');
                         } else {
                             var del= nick.lastIndexOf("-");
